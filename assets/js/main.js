@@ -60,3 +60,48 @@ function scrollTop(){
     if(this.scrollY >= 560) scrollTop.classList.add('scroll-top'); else scroll.classList.remove('scroll-top')
 }
 window.addEventListener('scroll', scrollTop)
+
+
+// Dark Light Theme
+const themeButton = document.getElementById('theme-button')
+const darkTheme = 'dark-theme'
+const iconTheme = 'bx-sun'
+
+const selectedTheme = localStorage.getItem('selected-theme')
+const selectedIcon = localStorage.getItem('selected-icon')
+
+const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light'
+const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'bx-moon' : 'bx-sun'
+
+//validasi jika user sebelumnya memilih topic
+if(selectedTheme){
+    //jika validasi terpenuhi, untuk mengetahui apakah sudah active atau deactive
+    document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
+    themeButton.classList[selectedIcon === 'bx-moon' ? 'add' : 'remove'](iconTheme)
+}
+
+themeButton.addEventListener('click', () =>{
+    //add or remove dark / light thene
+    document.body.classList.toggle(darkTheme);
+    themeButton.classList.toggle(iconTheme)
+    //menyimpan theme dan ikon saat ini ketika user memilih
+    localStorage.setItem('selected-theme', getCurrentTheme())
+    localStorage.setItem('selected-icon', getCurrentIcon())
+})
+
+// scroll reveal animation
+const sr = ScrollReveal({
+    origin: 'top',
+    distance: '30px',
+    duration: 2000,
+    reset: true
+});
+
+sr.reveal(`.home__data, .home__img,
+            .about__data, .about__img,
+            .services__content, .menu__content,
+            .app__data, .app__img,
+            .contact__data, .contact__button,
+            .footer__content`, {
+    interval: 200
+})
